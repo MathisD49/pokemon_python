@@ -182,24 +182,41 @@ def verify_percent():
         else:
             print(pokemon_list[i]['name'], "apparait autant de fois que prévu (", str(result[i]), ")")
 
+def pokemon_choice():
+    for i in inventaire_pokemon:
+        print(str(inventaire_pokemon.index(i)+1), " - ", i['name'])
+    
+    choix = int(input("Quel pokemon voulez-vous ? : "))
+
+    if choix > len(inventaire_pokemon)+1 or choix < 0:
+        print("ce pokemon n'existe pas")
+    else:
+        return inventaire_pokemon[choix-1]
+
 def combat(pokemon_joueur, pokemon_sauvage):
+
     ratio1 = pokemon_joueur['attaque'] / pokemon_joueur['defense']
+    print(type(ratio1))
     ratio2 = pokemon_sauvage['attaque'] / pokemon_sauvage['defense']
+    print(type(ratio2))
     total = ratio1+ratio2
-    rdm = random.randint(0, total)
+    rdm = random.randint(0, round(total))
 
     if rdm >= 0 and rdm <= ratio1:
         return True
     else:
         return False
 
-def resultat_combat(result, pokedollars_joueur):
+def resultat_combat(result, pokedollars_joueur, pokemon_sauvage):
     rdm = random.randint(0, 2000)
     if result:
         print("Vous avez gagné le combat")
+        inventaire_pokemon.append(pokemon_sauvage)
         pokedollars_joueur += rdm
+        generation.clear()
     else:
         print("Vous avez perdu")
+        generation.clear()
 
 def attraper():
     spawn()
@@ -217,7 +234,7 @@ def attraper():
                     if rdm >= 0 and rdm <= nouveau_percent:
                         pokemon_list.append(generation[0])
                         i['nb'] -= 1
-                        generation[0] = []
+                        generation.clear()
                         print("Vous avez attrapé le pokemon !")
                         verif = 1
                     else:
@@ -287,7 +304,9 @@ def menu():
                 print("2 - attraper")
                 choix_spawn = input("Que voulez vous : ")
                 if choix_spawn == "1":
-                    resultat_combat(combat(inventaire_pokemon[0], generation[0]), nb_pokedollars)
+                    spawn()
+                    print(generation)
+                    resultat_combat(combat(pokemon_choice(), generation[0]), nb_pokedollars, generation[0])
                 elif choix_spawn == "2":
                     attraper()
                 elif choix_spawn == "quitter":
