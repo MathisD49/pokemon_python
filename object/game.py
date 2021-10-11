@@ -11,6 +11,8 @@ class Game:
         self.generation = []
         self.percent_data = []
         self.nb_spawn = nb_spawn
+        self.inventaire_pokemon = []
+        self.inventaire_objets = []
 
 
     def calcul_total_percent(self):
@@ -47,7 +49,6 @@ class Game:
                 print(self.pokemon_liste[percent_pokemon].name, "apparait plus de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
             else:
                 print(self.pokemon_liste[percent_pokemon].name, "apparait autant de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
-            # print(self.pokemon_liste[percent_pokemon].name, " apparait à ", self.percent_data[percent_pokemon], "%")
 
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
