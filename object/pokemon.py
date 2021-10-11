@@ -1,6 +1,3 @@
-from pokemon.procedural.pokemon_proc import spawn
-
-
 class Pokemon:
     def __init__(self, name, percent_spawn, percent_resistance, attaque, defense):
         self.name = name
