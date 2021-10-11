@@ -50,6 +50,17 @@ class Game:
             else:
                 print(self.pokemon_liste[percent_pokemon].name, "apparait autant de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
 
+    def combat(self, pokemon_joueur, pokemon_sauvage):
+        ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
+        ratio2 = pokemon_sauvage.attaque / pokemon_sauvage.defense
+        total = ratio1+ratio2
+        rdm = random.randint(0, round(total))
+
+        if rdm >= 0 and rdm <= ratio1:
+            print("Vous avez gagné")
+        else:
+            print("Vous avez perdu")
+
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
     Pokemon('b', 30, 15, 30, 10),
@@ -70,3 +81,4 @@ a.spawn()
 for i in a.generation:
     print(i.name)
 a.calcul_percent()
+# a.combat(my_pokemon_list[1], my_pokemon_list[0])
