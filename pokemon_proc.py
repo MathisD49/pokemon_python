@@ -111,7 +111,7 @@ inventaire_objets = [
         {
         'name': 'pokeball',
         'percent': 30,
-        'nb': 3
+        'nb': 500
 
     },
         {
@@ -191,6 +191,20 @@ def pokemon_choice():
     else:
         return inventaire_pokemon[choix-1]
 
+def pokeball_choice(verif):
+        for i in inventaire_objets:
+            print(str(inventaire_objets.index(i)+1), " - ", i['name'])
+        
+        choix = int(input("Quel pokeball voulez-vous ? : "))
+
+        if choix > len(inventaire_objets)+1 or choix < 0:
+            print("cette pokeball n'existe pas")
+        elif choix == "quitter":
+            verif = 1
+            return verif
+        else:
+            return inventaire_objets[choix-1]
+
 def combat(pokemon_joueur, pokemon_sauvage):
 
     ratio1 = pokemon_joueur['attaque'] / pokemon_joueur['defense']
@@ -221,25 +235,23 @@ def attraper():
     print("un ", generation[0]['name'], " apparait !")
     verif = 0
     while verif != 1:
-        pokeball = input("Quelle pokeball voulez-vous utiliser ? : ")
-        if pokeball == "quitter":
-            verif = 1
+        pokeball = pokeball_choice(verif)
+        if pokeball['nb'] > 0:
+            nouveau_percent = (generation[0]['percent_resistance']*pokeball['percent'])/100
+            rdm = random.randint(0, 100)
+            if rdm >= 0 and rdm <= nouveau_percent:
+                inventaire_pokemon.append(generation[0])
+                pokeball['nb'] -= 1
+                generation.clear()
+                print("Vous avez attrapé le pokemon !")
+                verif = 1
+            else:
+                pokeball['nb'] -= 1
+                print("vous ne l'avez pas attrapé")
         else:
-            for i in inventaire_objets:
-                if i['name'] == pokeball and i['nb'] > 0:
-                    nouveau_percent = (generation[0]['percent_resistance']*i['percent'])/100
-                    rdm = random.randint(0, 100)
-                    if rdm >= 0 and rdm <= nouveau_percent:
-                        pokemon_list.append(generation[0])
-                        i['nb'] -= 1
-                        generation.clear()
-                        print("Vous avez attrapé le pokemon !")
-                        verif = 1
-                    else:
-                        i['nb'] -= 1
-                        print("vous ne l'avez pas attrapé")
-                else:
-                    print("vous ne disposez pas de cette pokeball")
+            print("Vous n'avez pas cette pokeball")
+            
+
 
 def shop(pokedollars_joueur):
     content = [ 
