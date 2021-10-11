@@ -13,7 +13,7 @@ class Game:
         self.nb_spawn = nb_spawn
         self.inventaire_pokemon = []
         self.inventaire_objets = []
-
+        self.solde_pokedollars = 0
 
     def calcul_total_percent(self):
         for i in self.pokemon_liste:
@@ -54,9 +54,12 @@ class Game:
         ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
         ratio2 = pokemon_sauvage.attaque / pokemon_sauvage.defense
         total = ratio1+ratio2
+
         rdm = random.randint(0, round(total))
+        rdm_pokedollars = random.randint(0, 2000)
 
         if rdm >= 0 and rdm <= ratio1:
+            self.solde_pokedollars += rdm_pokedollars
             print("Vous avez gagné")
         else:
             print("Vous avez perdu")
