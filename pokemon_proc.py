@@ -285,6 +285,18 @@ def shop(pokedollars_joueur):
     #         print(item)
     #     verif += 1
 
+def format_list(liste):
+    texte_format = ""
+
+    for i in liste:
+        texte_format += "\n-----------------------------\n"
+        for key, value in i.items():
+            texte_format += "" + str(key) +  " : " + str(value) + "\n"
+
+        texte_format += "-----------------------------"
+
+    return texte_format
+
 def menu():
     while True:
         print("1 - shop")
@@ -312,11 +324,11 @@ def menu():
                 else:
                     print("mauvaise input")
         elif choix == "3":
-            print("Solde Pokedollars : ", str(nb_pokedollars))
-            print(inventaire_objets, "\n")
+            print("\nSolde Pokedollars : ", str(nb_pokedollars))
+            print(format_list(inventaire_objets))
             # faire une fonction avec un formatage du texte
         elif choix == "4":
-            print(inventaire_pokemon, "\n")
+            print(format_list(inventaire_pokemon))
             # faire une fonction avec un formatage du texte
         elif choix == "quitter":
             print("Quitter !")
@@ -325,7 +337,3 @@ def menu():
             print("mauvaise input !")
 
 menu()
-
-# spawn()
-# print(generation)
-# verify_percent()
