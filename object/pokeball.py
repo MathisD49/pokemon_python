@@ -1,5 +1,5 @@
 class Pokeball:
-    def __init__(self, name, percent, nb):
+    def __init__(self, name, percent):
         self.name = name
         self.percent = percent
-        self.nb = nb
+        self.nb = 0

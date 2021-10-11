@@ -57,6 +57,12 @@ my_pokemon_list = [
     Pokemon('e', 60, 20, 30, 50),
 ]
 
+my_pokeball_list = [
+    Pokeball('pokeball', 30),
+    Pokeball('superball', 50),
+    Pokeball('hyperball', 70),
+    Pokeball('masterball', 100),
+]
 
 a = Game(my_pokemon_list, 100)
 a.spawn()
