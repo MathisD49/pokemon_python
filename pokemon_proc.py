@@ -109,7 +109,32 @@ pokeball_list = [
     },
 ]
 
-inventaire_objets = []
+inventaire_objets = [
+        {
+        'name': 'pokeball',
+        'percent': 30,
+        'nb': 3
+
+    },
+        {
+        'name': 'superball',
+        'percent': 50,
+        'nb': 0
+
+    },
+        {
+        'name': 'hyperball',
+        'percent': 70,
+        'nb': 0
+
+    },
+        {
+        'name': 'masterball',
+        'percent': 100,
+        'nb': 0
+
+    },
+]
 
 inventaire_pokemon = [
     {
@@ -177,19 +202,29 @@ def resultat_combat(result, pokedollars_joueur):
         print("Vous avez perdu")
 
 def attraper():
+    spawn()
     print("un ", generation[0]['name'], " apparait !")
-    while True:
+    verif = 0
+    while verif != 1:
         pokeball = input("Quelle pokeball voulez-vous utiliser ? : ")
-        for i in pokeball_list:
-            if i['name'] == pokeball and i['nb'] > 0:
-                nouveau_percent = (generation['percent_resistance']*i['percent'])/100
-                rdm = random.randint(0, 100)
-                if rdm >= 0 and rdm <= nouveau_percent:
-                    pokemon_list.append(generation[0])
-                    print("Vous avez attrapé le pokemon !")
-                    break
-            else:
-                print("vous ne disposez pas de cette pokeball")
+        if pokeball == "quitter":
+            verif = 1
+        else:
+            for i in inventaire_objets:
+                if i['name'] == pokeball and i['nb'] > 0:
+                    nouveau_percent = (generation[0]['percent_resistance']*i['percent'])/100
+                    rdm = random.randint(0, 100)
+                    if rdm >= 0 and rdm <= nouveau_percent:
+                        pokemon_list.append(generation[0])
+                        i['nb'] -= 1
+                        generation[0] = []
+                        print("Vous avez attrapé le pokemon !")
+                        verif = 1
+                    else:
+                        i['nb'] -= 1
+                        print("vous ne l'avez pas attrapé")
+                else:
+                    print("vous ne disposez pas de cette pokeball")
 
 def shop(pokedollars_joueur):
     content = [ 
@@ -254,7 +289,9 @@ def menu():
                 if choix_spawn == "1":
                     resultat_combat(combat(inventaire_pokemon[0], generation[0]), nb_pokedollars)
                 elif choix_spawn == "2":
-                    pass
+                    attraper()
+                elif choix_spawn == "quitter":
+                    break
                 else:
                     print("mauvaise input")
         elif choix == "3":
