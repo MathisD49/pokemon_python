@@ -43,7 +43,7 @@ RDM_MIN = 0
 # --------------- VARIABLE -----------------
 total_percent_pokemon = 0
 generation = []
-nb_pokedollars = 600
+nb_pokedollars = 60000
 
 
 pokemon_list = [
@@ -194,14 +194,14 @@ def pokemon_choice():
 def pokeball_choice(verif):
         for i in inventaire_objets:
             print(str(inventaire_objets.index(i)+1), " - ", i['name'])
+        print("99 - quitter")
         
         choix = int(input("Quel pokeball voulez-vous ? : "))
 
         if choix > len(inventaire_objets)+1 or choix < 0:
             print("cette pokeball n'existe pas")
-        elif choix == "quitter":
-            verif = 1
-            return verif
+        elif choix == 99:
+            return 1
         else:
             return inventaire_objets[choix-1]
 
@@ -251,9 +251,9 @@ def attraper():
         else:
             print("Vous n'avez pas cette pokeball")
             
-
-
 def shop(pokedollars_joueur):
+    global nb_pokedollars
+
     content = [ 
         {
             'name': 'pokeball',
@@ -274,28 +274,24 @@ def shop(pokedollars_joueur):
     ]
 
     verif = 0
-
-    # PROBLEME BOUCLE SUR TOUS LES OBJETS ET NE S'ARRETE PAS SUR LA BALL QU'ON VEUT
-    # mais pokeball voulu bien dans l'inventaire
     while verif != 1:
-        achat = input("Que voulez-vous acheter ? : ")
-        for item in content:
-            if achat == item['name']:
-                pokedollars_joueur -= item['price']
-                for i in pokeball_list:
-                    if i['name'] == item['name']:
-                        inventaire_objets.append(i)
-                        print("Vous avez acheté une ", achat, " pour ", item['price'])
-                verif += 1
-            elif achat == "quitter":
-                verif += 1
-            else:
-                print("Nous n'avons pas ça dans notre shop")
-
-    # while verif != 1:
-    #     for item in content:
-    #         print(item)
-    #     verif += 1
+        pokeball = pokeball_choice(verif)
+        if pokeball == None:
+            verif += 1
+        else:
+            for i in inventaire_objets:
+                if i['name'] == pokeball['name']:
+                    for j in content:
+                        if pokeball['name'] == j['name']:
+                            if pokedollars_joueur < j['price']:
+                                print("pas assez de pokedollars pour l'achat")
+                                verif += 1
+                            else:
+                                i['nb'] += 1
+                                nb_pokedollars -= j['price']
+                                print("Pokeball acheté !")
+                                verif += 1
+        
 
 def format_list(liste):
     texte_format = ""
