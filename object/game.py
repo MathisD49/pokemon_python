@@ -4,28 +4,42 @@ from pokemon import Pokemon
 from pokeball import Pokeball
 
 class Game:
-    def __init__(self, pokemon_liste):
+    def __init__(self, pokemon_liste, nb_spawn):
         self.pokemon_liste = pokemon_liste
         self.total_percent_pokemon = 0
         self.calcul_total_percent()
         self.generation = []
+        self.percent_data = []
+        self.nb_spawn = nb_spawn
 
     def calcul_total_percent(self):
         for i in self.pokemon_liste:
             self.total_percent_pokemon += i.percent_spawn
 
-    def spawn(self, nb_spawn):
-        for _i in range(nb_spawn):
+    def spawn(self):
+        for _i in range(self.nb_spawn):
             rdm = random.randint(0, self.total_percent_pokemon)
             nb = 0
             for j in range(len(self.pokemon_liste)):
                 if j == 0:
+                    nb += self.pokemon_liste[j].percent_spawn
                     if rdm > 0 and rdm <= nb:
                         self.generation.append(self.pokemon_liste[j])
                 else:
                     nb += self.pokemon_liste[j].percent_spawn
                     if rdm > (nb - self.pokemon_liste[j].percent_spawn) and rdm <= nb:
                         self.generation.append(self.pokemon_liste[j])
+
+    def calcul_percent(self):
+        for i in self.pokemon_liste:
+            name_count = 0
+            for j in self.generation:
+                if j.name == i.name:
+                    name_count += 1
+            self.percent_data.append((name_count*100)/self.nb_spawn)
+
+        for percent_pokemon in range(len(self.percent_data)):
+            print(self.pokemon_liste[percent_pokemon].name, " apparait à ", self.percent_data[percent_pokemon], "%")
 
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
@@ -36,7 +50,8 @@ my_pokemon_list = [
 ]
 
 
-a = Game(my_pokemon_list)
-a.spawn(100)
+a = Game(my_pokemon_list, 100)
+a.spawn()
 for i in a.generation:
     print(i.name)
+a.calcul_percent()
