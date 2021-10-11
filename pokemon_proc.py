@@ -33,8 +33,6 @@
 #       -> inventaire objets
 #       -> inventaire pokemon
 
-# TODO:
-# - ne pas mettre de pokemon 2 dans combat, juste demander pokemon utilisateur et faire appel à "génération"
 
 import random
 
@@ -314,10 +312,11 @@ def menu():
                 else:
                     print("mauvaise input")
         elif choix == "3":
-            print(inventaire_objets)
+            print("Solde Pokedollars : ", str(nb_pokedollars))
+            print(inventaire_objets, "\n")
             # faire une fonction avec un formatage du texte
         elif choix == "4":
-            print(inventaire_pokemon)
+            print(inventaire_pokemon, "\n")
             # faire une fonction avec un formatage du texte
         elif choix == "quitter":
             print("Quitter !")
