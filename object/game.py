@@ -12,6 +12,7 @@ class Game:
         self.percent_data = []
         self.nb_spawn = nb_spawn
 
+
     def calcul_total_percent(self):
         for i in self.pokemon_liste:
             self.total_percent_pokemon += i.percent_spawn
@@ -39,7 +40,14 @@ class Game:
             self.percent_data.append((name_count*100)/self.nb_spawn)
 
         for percent_pokemon in range(len(self.percent_data)):
-            print(self.pokemon_liste[percent_pokemon].name, " apparait à ", self.percent_data[percent_pokemon], "%")
+            real_percent = (self.pokemon_liste[percent_pokemon].percent_spawn*100)/self.total_percent_pokemon
+            if real_percent > self.percent_data[percent_pokemon]:
+                print(self.pokemon_liste[percent_pokemon].name, "apparait moins de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
+            elif real_percent < self.percent_data[percent_pokemon]:
+                print(self.pokemon_liste[percent_pokemon].name, "apparait plus de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
+            else:
+                print(self.pokemon_liste[percent_pokemon].name, "apparait autant de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
+            # print(self.pokemon_liste[percent_pokemon].name, " apparait à ", self.percent_data[percent_pokemon], "%")
 
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
