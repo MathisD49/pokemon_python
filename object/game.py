@@ -11,7 +11,7 @@ class Game:
         self.generation = []
         self.percent_data = []
         self.nb_spawn = nb_spawn
-        self.inventaire_pokemon = []
+        self.inventaire_pokemon = [pokemon_liste[0]]
         self.inventaire_objets = inventaire_objets
         self.content_shop = content_shop
         self.solde_pokedollars = 0
@@ -66,6 +66,19 @@ class Game:
         else:
             return self.inventaire_objets[choix-1]
 
+    def pokemon_choice(self):
+        for i in self.inventaire_pokemon:
+            print(str(self.inventaire_pokemon.index(i)+1), " - ", i.name)
+            print("99 - quitter")
+            choix = int(input("Quel pokeball voulez-vous ? : "))
+
+            if choix == 99:
+                self.verif += 1
+            elif choix > len(self.inventaire_pokemon)+1 or choix < 0:
+                print("cette pokeball n'existe pas")
+            else:
+                return self.inventaire_pokemon[choix-1]
+
     def combat(self, pokemon_joueur, pokemon_sauvage):
         ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
         ratio2 = pokemon_sauvage.attaque / pokemon_sauvage.defense
@@ -76,9 +89,11 @@ class Game:
 
         if rdm >= 0 and rdm <= ratio1:
             self.solde_pokedollars += rdm_pokedollars
+            self.generation.clear()
             print("Vous avez gagné")
         else:
             print("Vous avez perdu")
+            self.generation.clear()
 
     def attraper(self):
         self.verif = 0
@@ -141,7 +156,8 @@ class Game:
                     choix_spawn = int(input("Un pokemon a spawn que voulez vous faire ? : "))
                     if choix_spawn == 1:
                         pass
-                        # mettre en place methode pour choisir le pokemon du joueur
+                        self.spawn()
+                        self.combat(self.pokemon_choice(), self.generation[0])
                     elif choix_spawn == 2:
                         self.attraper()
                     elif choix_spawn == 99:
@@ -203,7 +219,7 @@ a = Game(my_pokemon_list, my_pokeball_list, shop_content, 1)
 # print(a.inventaire_pokemon[0].name)
 # print(a.inventaire_objets[2].nb)
 
-a.solde_pokedollars = 600
+# a.solde_pokedollars = 600
 
 # print(a.solde_pokedollars)
 # print(a.inventaire_objets[0].nb)
