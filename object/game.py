@@ -14,7 +14,7 @@ class Game:
         self.inventaire_pokemon = [pokemon_liste[0]]
         self.inventaire_objets = inventaire_objets
         self.content_shop = content_shop
-        self.solde_pokedollars = 0
+        self.solde_pokedollars = 600
         self.verif = 0
         self.main_menu()
 
@@ -136,6 +136,20 @@ class Game:
                                     self.solde_pokedollars -= j['price']
                                     print("Pokeball acheté !")
 
+    def format_texte(self, liste):
+        texte_format = ""
+
+        for i in liste:
+            texte_format += "\n-----------------------------\n"
+            liste_dict = i.__dict__
+            for key, value in liste_dict.items():
+                texte_format += "" + str(key) +  " : " + str(value) + "\n"
+            texte_format += "-----------------------------"
+
+        return texte_format
+
+        # return liste[0].__dict__
+
     def main_menu(self):
         while True:
             self.verif = 0
@@ -166,9 +180,9 @@ class Game:
                         print("Mauvaise input")
             elif choix_menu == 3:
                 print("Solde pokedollars : ", str(self.solde_pokedollars))
-                print(self.inventaire_objets)
+                print(self.format_texte(self.inventaire_objets))
             elif choix_menu == 4:
-                print(self.inventaire_pokemon)
+                print(self.format_texte(self.inventaire_pokemon))
             elif choix_menu == 99:
                 break
             else:
