@@ -16,6 +16,7 @@ class Game:
         self.content_shop = content_shop
         self.solde_pokedollars = 0
         self.verif = 0
+        self.main_menu()
 
     def calcul_total_percent(self):
         for i in self.pokemon_liste:
@@ -120,6 +121,43 @@ class Game:
                                     self.solde_pokedollars -= j['price']
                                     print("Pokeball acheté !")
 
+    def main_menu(self):
+        while True:
+            self.verif = 0
+            print("Bienvenue dans Pokemon")
+            print("1 - Shop")
+            print("2 - Spawn")
+            print("3 - Inventaire objets")
+            print("4 - Inventaire pokemon")
+            choix_menu = int(input("Que voulez-vous faire ? : "))
+
+            if choix_menu == 1:
+                self.shop()
+            elif choix_menu == 2:
+                while True:
+                    print("1 - Combat")
+                    print("2 - Attraper")
+                    print("99 - Quitter")
+                    choix_spawn = int(input("Un pokemon a spawn que voulez vous faire ? : "))
+                    if choix_spawn == 1:
+                        pass
+                        # mettre en place methode pour choisir le pokemon du joueur
+                    elif choix_spawn == 2:
+                        self.attraper()
+                    elif choix_spawn == 99:
+                        break
+                    else:
+                        print("Mauvaise input")
+            elif choix_menu == 3:
+                print("Solde pokedollars : ", str(self.solde_pokedollars))
+                print(self.inventaire_objets)
+            elif choix_menu == 4:
+                print(self.inventaire_pokemon)
+            elif choix_menu == 99:
+                break
+            else:
+                print("Mauvaise input")
+
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
     Pokemon('b', 30, 15, 30, 10),
@@ -167,8 +205,8 @@ a = Game(my_pokemon_list, my_pokeball_list, shop_content, 1)
 
 a.solde_pokedollars = 600
 
-print(a.solde_pokedollars)
-print(a.inventaire_objets[0].nb)
-a.shop()
-print(a.solde_pokedollars)
-print(a.inventaire_objets[0].nb)
+# print(a.solde_pokedollars)
+# print(a.inventaire_objets[0].nb)
+# a.shop()
+# print(a.solde_pokedollars)
+# print(a.inventaire_objets[0].nb)
