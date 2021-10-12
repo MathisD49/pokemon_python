@@ -4,7 +4,7 @@ from pokemon import Pokemon
 from pokeball import Pokeball
 
 class Game:
-    def __init__(self, pokemon_liste, inventaire_objets, nb_spawn):
+    def __init__(self, pokemon_liste, inventaire_objets, content_shop, nb_spawn):
         self.pokemon_liste = pokemon_liste
         self.total_percent_pokemon = 0
         self.calcul_total_percent()
@@ -13,6 +13,7 @@ class Game:
         self.nb_spawn = nb_spawn
         self.inventaire_pokemon = []
         self.inventaire_objets = inventaire_objets
+        self.content_shop = content_shop
         self.solde_pokedollars = 0
         self.verif = 0
 
@@ -64,7 +65,6 @@ class Game:
         else:
             return self.inventaire_objets[choix-1]
 
-
     def combat(self, pokemon_joueur, pokemon_sauvage):
         ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
         ratio2 = pokemon_sauvage.attaque / pokemon_sauvage.defense
@@ -103,6 +103,23 @@ class Game:
             else:
                 print("Vous n'avez pas cette pokeball")
 
+    def shop(self):
+        while self.verif != 1:
+            pokeball = self.pokeball_choice()
+            if pokeball == None:
+                break
+            else:
+                for i in self.inventaire_objets:
+                    if i.name == pokeball.name:
+                        for j in self.content_shop:
+                            if pokeball.name == j['name']:
+                                if self.solde_pokedollars < j['price']:
+                                    print("vous n'avez pas assez de pokedollars")
+                                else:
+                                    i.nb += 1
+                                    self.solde_pokedollars -= j['price']
+                                    print("Pokeball acheté !")
+
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
     Pokemon('b', 30, 15, 30, 10),
@@ -118,12 +135,40 @@ my_pokeball_list = [
     Pokeball('masterball', 100),
 ]
 
-a = Game(my_pokemon_list, my_pokeball_list, 1)
-a.spawn()
-for i in a.generation:
-    print(i.name)
-a.calcul_percent()
+shop_content = [ 
+    {
+        'name': 'pokeball',
+        'price': 200
+    },
+    {
+        'name': 'superball',
+        'price': 600
+    },
+    {
+        'name': 'hyperball',
+        'price': 1200
+    },
+    {
+        'name': 'masterball',
+        'price': 50000
+    }
+]
+
+a = Game(my_pokemon_list, my_pokeball_list, shop_content, 1)
+# a.spawn()
+# for i in a.generation:
+#     print(i.name)
+# a.calcul_percent()
 # a.combat(my_pokemon_list[1], my_pokemon_list[0])
-my_pokeball_list[2].nb = 500
-a.attraper()
-print(a.inventaire_pokemon[0].name)
+# my_pokeball_list[2].nb = 500
+# a.attraper()
+# print(a.inventaire_pokemon[0].name)
+# print(a.inventaire_objets[2].nb)
+
+a.solde_pokedollars = 600
+
+print(a.solde_pokedollars)
+print(a.inventaire_objets[0].nb)
+a.shop()
+print(a.solde_pokedollars)
+print(a.inventaire_objets[0].nb)
