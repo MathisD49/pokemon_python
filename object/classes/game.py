@@ -38,6 +38,7 @@ class Game:
                     if rdm > (nb - self.pokemon_liste[j].percent_spawn) and rdm <= nb:
                         self.generation.append(self.pokemon_liste[j])
 
+    # permet de savoir si une pokemon à spawn plus ou moins que le dit son pourcentage
     def calcul_percent(self):
         for i in self.pokemon_liste:
             name_count = 0
@@ -55,6 +56,7 @@ class Game:
             else:
                 print(self.pokemon_liste[percent_pokemon].name, "apparait autant de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
 
+    # méthode pour selectionner quelque chose (pokeball / pokemon)
     def choice_object(self, liste_object):
         print("\n")
         for i in liste_object:
@@ -70,6 +72,7 @@ class Game:
         else:
             return liste_object[choix-1]
 
+    # méthode qui gère la partie combat
     def combat(self, pokemon_joueur, pokemon_sauvage):
         if pokemon_joueur != None:
             ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
@@ -87,6 +90,7 @@ class Game:
                 print("Vous avez perdu")
                 self.generation.clear()
 
+    # méthode qui gère la partie pour attraper un pokemon
     def attraper(self):
         self.verif = 0
         self.spawn()
@@ -110,6 +114,7 @@ class Game:
             else:
                 print("Vous n'avez pas cette pokeball")
 
+    # gère la partie shop
     def shop(self):
         while self.verif != 1:
             pokeball = self.choice_object(self.inventaire_objets)
@@ -127,6 +132,7 @@ class Game:
                                     self.solde_pokedollars -= j['price']
                                     print("Pokeball acheté !")
 
+    # permet de mettre des textes sous une certaine forme (inventaires)
     def format_texte(self, liste):
         texte_format = ""
 
