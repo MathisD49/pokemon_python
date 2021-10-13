@@ -39,4 +39,17 @@ class Inventaire:
 
     def withdraw_pokedollars(self, nb):
         self.pokedollars -= nb
+
+    # ---------- AUTRE ----------
+    def format_texte(self, liste):
+        texte_format = ""
+
+        for i in liste:
+            texte_format += "\n-----------------------------\n"
+            liste_dict = i.__dict__
+            for key, value in liste_dict.items():
+                texte_format += "" + str(key) +  " : " + str(value) + "\n"
+            texte_format += "-----------------------------"
+
+        return texte_format
     

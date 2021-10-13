@@ -124,21 +124,6 @@ class Game:
             else:
                 self.my_shop.buy(self.inventaire_joueur.get_name(pokeball), self.inventaire_joueur.get_pokedollars())
 
-    # permet de mettre des textes sous une certaine forme (inventaires)
-    def format_texte(self, liste):
-        texte_format = ""
-
-        for i in liste:
-            texte_format += "\n-----------------------------\n"
-            liste_dict = i.__dict__
-            for key, value in liste_dict.items():
-                texte_format += "" + str(key) +  " : " + str(value) + "\n"
-            texte_format += "-----------------------------"
-
-        return texte_format
-
-        # return liste[0].__dict__
-
     def main_menu(self):
         while True:
             self.verif = 0
@@ -170,9 +155,11 @@ class Game:
                         print("Mauvaise input")
             elif choix_menu == 3:
                 print("Solde pokedollars : ", str(self.inventaire_joueur.get_pokedollars()))
-                print(self.format_texte(self.inventaire_joueur.get_pokeball_list()))
+                # print(self.format_texte(self.inventaire_joueur.get_pokeball_list()))
+                print(self.inventaire_joueur.format_texte(self.inventaire_joueur.get_pokeball_list()))
             elif choix_menu == 4:
-                print(self.format_texte(self.inventaire_joueur.get_pokemon_list()))
+                # print(self.format_texte(self.inventaire_joueur.get_pokemon_list()))
+                print(self.inventaire_joueur.format_texte(self.inventaire_joueur.get_pokemon_list()))
             elif choix_menu == 99:
                 break
             else:
