@@ -1,6 +1,8 @@
 from classes.game import Game
 from classes.pokemon import Pokemon
 from classes.pokeball import Pokeball
+from classes.inventaire import Inventaire
+from classes.shop import Shop
 
 my_pokemon_list = [
     Pokemon('a', 50, 5, 10, 10),
@@ -36,4 +38,8 @@ shop_content = [
     }
 ]
 
-a = Game(my_pokemon_list, my_pokeball_list, shop_content, 1)
+inventaire = Inventaire([], my_pokeball_list, 600)
+
+shop = Shop(shop_content, inventaire)
+
+a = Game(my_pokemon_list, inventaire, shop, 1)

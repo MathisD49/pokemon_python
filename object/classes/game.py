@@ -4,17 +4,15 @@ from classes.pokemon import Pokemon
 from classes.pokeball import Pokeball
 
 class Game:
-    def __init__(self, pokemon_liste, inventaire_objets, content_shop, nb_spawn):
+    def __init__(self, pokemon_liste, inventaire_joueur, my_shop, nb_spawn):
         self.pokemon_liste = pokemon_liste
-        self.inventaire_objets = inventaire_objets
-        self.content_shop = content_shop
+        self.inventaire_joueur = inventaire_joueur
         self.nb_spawn = nb_spawn
         self.generation = []
         self.percent_data = []
-        self.inventaire_pokemon = []
         self.total_percent_pokemon = 0
-        self.solde_pokedollars = 600
         self.verif = 0
+        self.my_shop = my_shop
         self.calcul_total_percent()
         self.main_menu()
 
@@ -82,7 +80,7 @@ class Game:
             rdm_pokedollars = random.randint(0, 2000)
 
             if rdm >= 0 and rdm <= ratio1:
-                self.solde_pokedollars += rdm_pokedollars
+                self.inventaire_joueur.add_pokedollars(rdm_pokedollars)
                 print("Vous avez gagné")
             else:
                 print("Vous avez perdu")
@@ -94,7 +92,7 @@ class Game:
         self.verif = 0
         self.spawn()
         while self.verif != 1:
-            pokeball = self.choice_object(self.inventaire_objets)
+            pokeball = self.choice_object(self.inventaire_joueur.get_pokeball_list())
 
             if pokeball == None:
                 break
@@ -102,7 +100,7 @@ class Game:
                 nouveau_percent = (self.generation[0].percent_resistance*pokeball.percent)/100
                 rdm = random.randint(0, 100)
                 if rdm >= 0 and rdm <= nouveau_percent:
-                    self.inventaire_pokemon.append(self.generation[0])
+                    self.inventaire_joueur.add_pokemon(self.generation[0])
                     self.generation.clear()
                     print("Vous avez attrapé le pokemon !")
                     self.verif = 1
@@ -117,20 +115,11 @@ class Game:
     # gère la partie shop
     def shop(self):
         while self.verif != 1:
-            pokeball = self.choice_object(self.inventaire_objets)
+            pokeball = self.choice_object(self.inventaire_joueur.get_pokeball_list())
             if pokeball == None:
                 break
             else:
-                for i in self.inventaire_objets:
-                    if i.name == pokeball.name:
-                        for j in self.content_shop:
-                            if pokeball.name == j['name']:
-                                if self.solde_pokedollars < j['price']:
-                                    print("vous n'avez pas assez de pokedollars")
-                                else:
-                                    i.nb += 1
-                                    self.solde_pokedollars -= j['price']
-                                    print("Pokeball acheté !")
+                self.my_shop.buy(self.inventaire_joueur.get_name(pokeball), self.inventaire_joueur.get_pokedollars())
 
     # permet de mettre des textes sous une certaine forme (inventaires)
     def format_texte(self, liste):
@@ -171,17 +160,20 @@ class Game:
                     elif choix_spawn == 1:
                         pass
                         self.spawn()
-                        self.combat(self.choice_object(self.inventaire_pokemon), self.generation[0])
+                        self.combat(self.choice_object(self.inventaire_joueur.get_pokemon_list()), self.generation[0])
                     elif choix_spawn == 2:
                         self.attraper()
                     else:
                         print("Mauvaise input")
             elif choix_menu == 3:
-                print("Solde pokedollars : ", str(self.solde_pokedollars))
-                print(self.format_texte(self.inventaire_objets))
+                print("Solde pokedollars : ", str(self.inventaire_joueur.get_pokedollars()))
+                print(self.format_texte(self.inventaire_joueur.get_pokeball_list()))
             elif choix_menu == 4:
-                print(self.format_texte(self.inventaire_pokemon))
+                print(self.format_texte(self.inventaire_joueur.get_pokemon_list()))
             elif choix_menu == 99:
                 break
             else:
                 print("Mauvaise input")
+
+#TODO:
+# - faire en sorte que la résistance ne s'applique pas sur les masterball
