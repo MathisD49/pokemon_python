@@ -11,7 +11,7 @@ class Game:
         self.nb_spawn = nb_spawn
         self.generation = []
         self.percent_data = []
-        self.inventaire_pokemon = []
+        self.inventaire_pokemon = [pokemon_liste[0]]
         self.total_percent_pokemon = 0
         self.solde_pokedollars = 600
         self.verif = 0
@@ -29,12 +29,11 @@ class Game:
             rdm = random.randint(0, self.total_percent_pokemon)
             nb = 0
             for j in range(len(self.pokemon_liste)):
+                nb += self.pokemon_liste[j].percent_spawn
                 if j == 0:
-                    nb += self.pokemon_liste[j].percent_spawn
                     if rdm > 0 and rdm <= nb:
                         self.generation.append(self.pokemon_liste[j])
                 else:
-                    nb += self.pokemon_liste[j].percent_spawn
                     if rdm > (nb - self.pokemon_liste[j].percent_spawn) and rdm <= nb:
                         self.generation.append(self.pokemon_liste[j])
 
@@ -84,11 +83,11 @@ class Game:
 
             if rdm >= 0 and rdm <= ratio1:
                 self.solde_pokedollars += rdm_pokedollars
-                self.generation.clear()
                 print("Vous avez gagné")
             else:
                 print("Vous avez perdu")
-                self.generation.clear()
+
+            self.generation.clear()
 
     # méthode qui gère la partie pour attraper un pokemon
     def attraper(self):
@@ -104,13 +103,14 @@ class Game:
                 rdm = random.randint(0, 100)
                 if rdm >= 0 and rdm <= nouveau_percent:
                     self.inventaire_pokemon.append(self.generation[0])
-                    pokeball.nb -= 1
                     self.generation.clear()
                     print("Vous avez attrapé le pokemon !")
                     self.verif = 1
                 else:
-                    pokeball.nb -= 1
                     print("Vous ne l'avez pas attrapé")
+
+                pokeball.nb -= 1
+
             else:
                 print("Vous n'avez pas cette pokeball")
 
