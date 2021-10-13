@@ -54,6 +54,7 @@ class Game:
                 print(self.pokemon_liste[percent_pokemon].name, "apparait autant de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
 
     def choice_object(self, liste_object):
+        print("\n")
         for i in liste_object:
             print(str(liste_object.index(i)+1), " - ", i.name)
         print("99 - quitter")
@@ -61,27 +62,28 @@ class Game:
 
         if choix == 99:
             self.verif += 1
+            return None
         elif choix > len(liste_object)+1 or choix < 0:
             print("Cela n'existe pas")
         else:
             return liste_object[choix-1]
 
-
     def combat(self, pokemon_joueur, pokemon_sauvage):
-        ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
-        ratio2 = pokemon_sauvage.attaque / pokemon_sauvage.defense
-        total = ratio1+ratio2
+        if pokemon_joueur != None:
+            ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
+            ratio2 = pokemon_sauvage.attaque / pokemon_sauvage.defense
+            total = ratio1+ratio2
 
-        rdm = random.randint(0, round(total))
-        rdm_pokedollars = random.randint(0, 2000)
+            rdm = random.randint(0, round(total))
+            rdm_pokedollars = random.randint(0, 2000)
 
-        if rdm >= 0 and rdm <= ratio1:
-            self.solde_pokedollars += rdm_pokedollars
-            self.generation.clear()
-            print("Vous avez gagné")
-        else:
-            print("Vous avez perdu")
-            self.generation.clear()
+            if rdm >= 0 and rdm <= ratio1:
+                self.solde_pokedollars += rdm_pokedollars
+                self.generation.clear()
+                print("Vous avez gagné")
+            else:
+                print("Vous avez perdu")
+                self.generation.clear()
 
     def attraper(self):
         self.verif = 0
@@ -140,7 +142,7 @@ class Game:
     def main_menu(self):
         while True:
             self.verif = 0
-            print("Bienvenue dans Pokemon")
+            print("\nBienvenue dans Pokemon")
             print("1 - Shop")
             print("2 - Spawn")
             print("3 - Inventaire objets")
@@ -150,19 +152,20 @@ class Game:
             if choix_menu == 1:
                 self.shop()
             elif choix_menu == 2:
-                while True:
-                    print("1 - Combat")
+                while self.verif != 1:
+                    print("\n1 - Combat")
                     print("2 - Attraper")
                     print("99 - Quitter")
                     choix_spawn = int(input("Un pokemon a spawn que voulez vous faire ? : "))
-                    if choix_spawn == 1:
+                    if choix_spawn == 99:
+                        self.verif += 1
+                        break
+                    elif choix_spawn == 1:
                         pass
                         self.spawn()
                         self.combat(self.choice_object(self.inventaire_pokemon), self.generation[0])
                     elif choix_spawn == 2:
                         self.attraper()
-                    elif choix_spawn == 99:
-                        break
                     else:
                         print("Mauvaise input")
             elif choix_menu == 3:
