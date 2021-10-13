@@ -18,10 +18,12 @@ class Game:
         self.calcul_total_percent()
         self.main_menu()
 
+    # calcul la somme des pourcentages des pokemons
     def calcul_total_percent(self):
         for i in self.pokemon_liste:
             self.total_percent_pokemon += i.percent_spawn
 
+    # fait spawn un certain nombre de pokemon au hasard
     def spawn(self):
         for _i in range(self.nb_spawn):
             rdm = random.randint(0, self.total_percent_pokemon)
