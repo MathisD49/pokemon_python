@@ -38,7 +38,7 @@ shop_content = [
     }
 ]
 
-inventaire = Inventaire([], my_pokeball_list, 600)
+inventaire = Inventaire([], my_pokeball_list, 6000000000)
 
 shop = Shop(shop_content, inventaire)
 

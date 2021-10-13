@@ -27,6 +27,9 @@ class Inventaire:
     def remove_nb(self, objet, nb):
         objet.nb -= nb
 
+    def get_percent(self, objet):
+        return objet.percent
+
     # ---------- POKEDOLLARS ----------
     def get_pokedollars(self):
         return self.pokedollars

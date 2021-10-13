@@ -96,8 +96,11 @@ class Game:
 
             if pokeball == None:
                 break
-            elif pokeball.nb > 0:
-                nouveau_percent = (self.generation[0].percent_resistance*pokeball.percent)/100
+            # elif pokeball.nb > 0:
+            elif self.inventaire_joueur.get_nb(pokeball) > 0:
+                nouveau_percent = self.inventaire_joueur.get_percent(pokeball)
+                if self.inventaire_joueur.get_name(pokeball) != "masterball":
+                    nouveau_percent = (self.generation[0].percent_resistance*self.inventaire_joueur.get_percent(pokeball))/100
                 rdm = random.randint(0, 100)
                 if rdm >= 0 and rdm <= nouveau_percent:
                     self.inventaire_joueur.add_pokemon(self.generation[0])
@@ -174,6 +177,3 @@ class Game:
                 break
             else:
                 print("Mauvaise input")
-
-#TODO:
-# - faire en sorte que la résistance ne s'applique pas sur les masterball
