@@ -1,7 +1,7 @@
 import random
 
-from pokemon import Pokemon
-from pokeball import Pokeball
+from classes.pokemon import Pokemon
+from classes.pokeball import Pokeball
 
 class Game:
     def __init__(self, pokemon_liste, inventaire_objets, content_shop, nb_spawn):
@@ -187,56 +187,3 @@ class Game:
                 break
             else:
                 print("Mauvaise input")
-
-my_pokemon_list = [
-    Pokemon('a', 50, 5, 10, 10),
-    Pokemon('b', 30, 15, 30, 10),
-    Pokemon('c', 10, 50, 50, 30),
-    Pokemon('d', 80, 15, 60, 60),
-    Pokemon('e', 60, 20, 30, 50),
-]
-
-my_pokeball_list = [
-    Pokeball('pokeball', 30),
-    Pokeball('superball', 50),
-    Pokeball('hyperball', 70),
-    Pokeball('masterball', 100),
-]
-
-shop_content = [ 
-    {
-        'name': 'pokeball',
-        'price': 200
-    },
-    {
-        'name': 'superball',
-        'price': 600
-    },
-    {
-        'name': 'hyperball',
-        'price': 1200
-    },
-    {
-        'name': 'masterball',
-        'price': 50000
-    }
-]
-
-a = Game(my_pokemon_list, my_pokeball_list, shop_content, 1)
-# a.spawn()
-# for i in a.generation:
-#     print(i.name)
-# a.calcul_percent()
-# a.combat(my_pokemon_list[1], my_pokemon_list[0])
-# my_pokeball_list[2].nb = 500
-# a.attraper()
-# print(a.inventaire_pokemon[0].name)
-# print(a.inventaire_objets[2].nb)
-
-# a.solde_pokedollars = 600
-
-# print(a.solde_pokedollars)
-# print(a.inventaire_objets[0].nb)
-# a.shop()
-# print(a.solde_pokedollars)
-# print(a.inventaire_objets[0].nb)
