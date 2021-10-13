@@ -41,15 +41,15 @@ class Inventaire:
         self.pokedollars -= nb
 
     # ---------- AUTRE ----------
-    def format_texte(self, liste):
-        texte_format = ""
+    def format_text(self, list):
+        text_format = ""
 
-        for i in liste:
-            texte_format += "\n-----------------------------\n"
-            liste_dict = i.__dict__
-            for key, value in liste_dict.items():
-                texte_format += "" + str(key) +  " : " + str(value) + "\n"
-            texte_format += "-----------------------------"
+        for i in list:
+            text_format += "\n-----------------------------\n"
+            list_dict = i.__dict__
+            for key, value in list_dict.items():
+                text_format += "" + str(key) +  " : " + str(value) + "\n"
+            text_format += "-----------------------------"
 
-        return texte_format
+        return text_format
     

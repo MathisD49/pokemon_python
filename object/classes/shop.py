@@ -3,14 +3,17 @@ class Shop:
         self.content = content
         self.inventaire = inventaire
     
+    # return le contenu du shop (nom et prix)
     def get_content(self):
         return self.content
 
+    # return le prix d'un des produit via son nom
     def get_price(self, name):
         for i in self.content:
             if i.name == name:
                 return i.price
 
+    # méthode permettant d'acheter une pokeball
     def buy(self, pokeball_name, nb_pokedollars):
         for i in self.inventaire.get_pokeball_list():
             if self.inventaire.get_name(i) == pokeball_name:
