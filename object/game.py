@@ -6,16 +6,16 @@ from pokeball import Pokeball
 class Game:
     def __init__(self, pokemon_liste, inventaire_objets, content_shop, nb_spawn):
         self.pokemon_liste = pokemon_liste
-        self.total_percent_pokemon = 0
-        self.calcul_total_percent()
-        self.generation = []
-        self.percent_data = []
-        self.nb_spawn = nb_spawn
-        self.inventaire_pokemon = [pokemon_liste[0]]
         self.inventaire_objets = inventaire_objets
         self.content_shop = content_shop
+        self.nb_spawn = nb_spawn
+        self.generation = []
+        self.percent_data = []
+        self.inventaire_pokemon = []
+        self.total_percent_pokemon = 0
         self.solde_pokedollars = 600
         self.verif = 0
+        self.calcul_total_percent()
         self.main_menu()
 
     def calcul_total_percent(self):
