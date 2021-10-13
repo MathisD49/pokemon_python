@@ -53,31 +53,19 @@ class Game:
             else:
                 print(self.pokemon_liste[percent_pokemon].name, "apparait autant de fois que prévu (", str(self.percent_data[percent_pokemon]), " au lieu de ", str(real_percent), ")")
 
-    def pokeball_choice(self):
-        for i in self.inventaire_objets:
-            print(str(self.inventaire_objets.index(i)+1), " - ", i.name)
+    def choice_object(self, liste_object):
+        for i in liste_object:
+            print(str(liste_object.index(i)+1), " - ", i.name)
         print("99 - quitter")
-        choix = int(input("Quel pokeball voulez-vous ? : "))
+        choix = int(input("Quel voulez-vous ? : "))
 
         if choix == 99:
             self.verif += 1
-        elif choix > len(self.inventaire_objets)+1 or choix < 0:
-            print("cette pokeball n'existe pas")
+        elif choix > len(liste_object)+1 or choix < 0:
+            print("Cela n'existe pas")
         else:
-            return self.inventaire_objets[choix-1]
+            return liste_object[choix-1]
 
-    def pokemon_choice(self):
-        for i in self.inventaire_pokemon:
-            print(str(self.inventaire_pokemon.index(i)+1), " - ", i.name)
-            print("99 - quitter")
-            choix = int(input("Quel pokeball voulez-vous ? : "))
-
-            if choix == 99:
-                self.verif += 1
-            elif choix > len(self.inventaire_pokemon)+1 or choix < 0:
-                print("cette pokeball n'existe pas")
-            else:
-                return self.inventaire_pokemon[choix-1]
 
     def combat(self, pokemon_joueur, pokemon_sauvage):
         ratio1 = pokemon_joueur.attaque / pokemon_joueur.defense
@@ -98,9 +86,8 @@ class Game:
     def attraper(self):
         self.verif = 0
         self.spawn()
-        print(self.generation[0])
         while self.verif != 1:
-            pokeball = self.pokeball_choice()
+            pokeball = self.choice_object(self.inventaire_objets)
 
             if pokeball == None:
                 break
@@ -121,7 +108,7 @@ class Game:
 
     def shop(self):
         while self.verif != 1:
-            pokeball = self.pokeball_choice()
+            pokeball = self.choice_object(self.inventaire_objets)
             if pokeball == None:
                 break
             else:
@@ -171,7 +158,7 @@ class Game:
                     if choix_spawn == 1:
                         pass
                         self.spawn()
-                        self.combat(self.pokemon_choice(), self.generation[0])
+                        self.combat(self.choice_object(self.inventaire_pokemon), self.generation[0])
                     elif choix_spawn == 2:
                         self.attraper()
                     elif choix_spawn == 99:
