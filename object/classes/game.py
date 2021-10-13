@@ -11,7 +11,7 @@ class Game:
         self.nb_spawn = nb_spawn
         self.generation = []
         self.percent_data = []
-        self.inventaire_pokemon = [pokemon_liste[0]]
+        self.inventaire_pokemon = []
         self.total_percent_pokemon = 0
         self.solde_pokedollars = 600
         self.verif = 0
