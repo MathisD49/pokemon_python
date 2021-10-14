@@ -45,7 +45,7 @@ class BDD:
         self.db_conn.commit()
         self.cursor.close() 
 
-    def create_money_table(self):
+    def create_pokedollars_table(self):
         # cursor = self.db_conn.cursor()
         query = """CREATE TABLE pokedollars(
                     id INT PRIMARY KEY,
@@ -79,7 +79,7 @@ class BDD:
         self.db_conn.commit()
         self.cursor.close()
 
-    def delete_money_table(self):
+    def delete_pokedollars_table(self):
         # cursor = self.db_conn.cursor()
         query = """DROP TABLE IF EXISTS pokedollars;"""
         self.cursor.execute(query)
@@ -87,18 +87,20 @@ class BDD:
         self.cursor.close()
     
     # ---------- INSERTION ----------
-    # def insert_pokemon(self, pokemon):
-    #     query = "INSERT INTO pokemon (name, percent_spawn, percent_resistance, attack, defense) VALUES (:name, :percent_spawn, :percent_resistance, :attack, :defense);"
-    #     self.cursor.execute(query, {pokemon.name: name, 
-    #                                 pokemon.percent_spawn: percent_spawn, 
-    #                                 pokemon.percent_resistance: percent_resistance,
-    #                                 pokemon.attack: attack,
-    #                                 pokemon.defense: defense})
-    #     self.db_conn.commit();
-    #     self.cursor.close()
+    def insert_pokemon(self, pokemon):
+        query = "INSERT INTO pokemon (name, percent_spawn, percent_resistance, attack, defense) VALUES (?, ?, ?, ?, ?);"
+        self.cursor.execute(query, (pokemon.name, pokemon.percent_spawn, pokemon.percent_resistance, pokemon.attack, pokemon.defense))
+        self.db_conn.commit()
+        self.cursor.close()
 
-    # def insert_pokedollars(self, pokeball):
-    #     pass
+    def insert_pokeball(self, pokeball):
+        query = "INSERT INTO pokeball (name, percent, nb) VALUES (?, ?, ?);"
+        self.cursor.execute(query, (pokeball.name, pokeball.percent, pokeball.nb))
+        self.db_conn.commit()
+        self.cursor.close()
 
-    # def insert_pokeball(self, pokedollars):
-    #     pass
+    def insert_pokedollars(self, pokedollars):
+        query = "INSERT INTO pokeball (nb) VALUES (?);"
+        self.cursor.execute(query, (pokedollars.nb))
+        self.db_conn.commit()
+        self.cursor.close()
