@@ -104,3 +104,41 @@ class BDD:
         self.cursor.execute(query, (pokedollars.nb))
         self.db_conn.commit()
         self.cursor.close()
+
+    # ---------- RECUPERATION ----------
+    def recovery_pokemon(self):
+        list_pokemon = []
+
+        query = "SELECT name, percent_spawn, percent_resistance, attack, defense FROM pokemon;"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        for row in rows:
+            list_pokemon.append(row)
+
+        self.cursor.close()
+
+        return list_pokemon
+
+    def recovery_pokeball(self):
+        list_pokeball = []
+
+        query = "SELECT name, percent, nb FROM pokeball;"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        for row in rows:
+            list_pokeball.append(row)
+
+        self.cursor.close()
+
+        return list_pokeball
+
+    def recovery_pokedollars(self):
+        query = "SELECT nb FROM pokedollars;"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        self.cursor.close()
+
+        return rows
